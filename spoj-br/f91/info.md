@@ -1,7 +1,7 @@
 1831\. f91
 ==========
 
-Source: http://br.spoj.com/problems/F91/
+Source: <http://br.spoj.com/problems/F91/>
 
 Implementation of a recursive function.
 This function was designed as a stress test for automated theorem provers.

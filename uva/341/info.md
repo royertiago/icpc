@@ -1,7 +1,7 @@
 Non-Stop Travel
 ===============
 
-Source: https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=277
+Source: <https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=277>
 
 Direct implementation of Dijkstra's algorithm,
 with the requirement that the optimum path must be recovered.
@@ -20,4 +20,4 @@ Concepts
 Difficulty
 ==========
 - Conceptual: easy
-- Implementation: medium
+- Implementation: easy

@@ -20,5 +20,5 @@ Concepts
 
 Difficulty
 ==========
-- Implementation: medium
+- Implementation: easy
 - Conceptual: easy

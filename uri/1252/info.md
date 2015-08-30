@@ -1,7 +1,7 @@
 Sort! Sort!! And Sort!!!
 ========================
 
-Source: https://www.urionlinejudge.com.br/judge/en/problems/view/1252
+Source: <https://www.urionlinejudge.com.br/judge/en/problems/view/1252>
 
 Simple sorting problem with custom comparison operator.
 The major difficulty of this problem is dealing with negative numbers,

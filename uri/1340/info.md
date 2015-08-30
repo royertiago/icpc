@@ -1,7 +1,7 @@
 I Can Guess the Data Structure!
 ===============================
 
-Source: https://www.urionlinejudge.com.br/judge/en/problems/view/1340
+Source: <https://www.urionlinejudge.com.br/judge/en/problems/view/1340>
 
 This problem requires the simultaneous management of three data structures.
 (Fortunately, the default priority queue of C++'s Standard Library
