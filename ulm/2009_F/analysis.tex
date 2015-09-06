@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\title{Analysis of problem ULM 2009 F --- Food portion size}
+\date{}
+\author{Tiago Royer}
+\maketitle
+
+The problem gives $n$ integers $y_1, y_2, ..., y_n$,
+representing how much each student eats,
+and two special parameters $a$ and $b$.
+The problem asks to minimize both the amount of food wasted
+and the number of times the student has to fetch food,
+weighted by the parameters $a$ and $b$,
+under the restriction that no student must have to fetch more than $3$ times.
+
+First, let's create a formula $c(S)$,
+which will tell the weighted average cost of wastes and fetches,
+given a portion size $S$.
+The constraint is simple to formulate;
+three portions must be enough to serve all students,
+so $S \geq y_i/3$ for all $i$.
+If $Y$ is the maximum of all $y_i$, the problem asks for
+\begin{equation*}
+    \min_{S \geq \frac Y 3} c(S).
+\end{equation*}
+
+\newcommand\fetches{\left\lceil \frac{y_i}{S} \right\rceil}
+
+The student $i$ will have to fetch food $\fetches$ times;
+summing from $i = 1$ to~$n$ gives $y$, the total number of fetches.
+
+Each time, the student $i$ will pick $S$ units of food;
+since only $y_i$ units will be eaten by student $i$,
+the wasted food is
+\begin{equation*}
+    S \fetches - y_i.
+\end{equation*}
+Summing from $i = 1$ to $n$ gives the total wasted food.
+
+Therefore, our desired formula is
+\begin{align*}
+    c(S) = ax + by &=
+        a\left(
+            \sum_{i=1}^n S \fetches - y_i
+        \right)
+        +b\left(
+            \sum_{i=1}^n \left\lceil \frac{y_i}{S} \right\rceil
+        \right) \\
+    &= (aS+b)\sum_{i=1}^n \fetches - a \sum_{i=1}^n y_i
+\end{align*}
+
+The second term,
+$a\sum_{i=1}^n y_i$,
+does not depend on $S$,
+so we cannot improve it.
+The first term is the product of $aS + b$,
+which is a strictly increasing function
+(because $a \geq 1$),
+and $\sum_{i=1}^n \fetches$,
+which decreases as $S$ becomes larger.
+
+However, the summation terms are ceilings of functions,
+which decreases in discrete steps.
+Thus, there are intervals $[i, j)$
+in which none of that ceilings change.
+On this interval, the cost function $c$ is affine and increasing,
+and thus has minimum value $c(i)$.
+Therefore, $c$ can only attain a minimum value
+in a point of discontinuity of $\sum_{i=1}^n \fetches$.
+
+Any discontinuity point of $\fetches$
+is a candidate for a discontinuity point of the summation.
+This function is discontinuous exactly when $y_i/S$ is an integer.
+Since the problem imposes the constraint that $\fetches$
+must be $1$, $2$ or~$3$,
+we have at most three discontinuity points that satisfies the constraints.
+Therefore, the set of discontinuity points is \emph{finite},
+and have at most $3n$ points.
+A brute-force approach costs thus $O(n^2)$,
+which is feasible as the problem guarantees $n \leq 10^3$.
+
+We can simplify the code by avoiding rational arithmetic.
+$y_i/S = k$ is the same as $S = y_i/k$;
+since all $y_i$ are integers,
+the only possible portion sizes have denominator $1$, $2$ or~$3$.
+Therefore, every rational number in the calculation
+will have denominator $1$, $2$, $3$ or~$6$.
+Thus, if we multiply everything by $6$,
+we will not have to deal with fractions in most of the code.
+
+We will multiply both $S$ and all the $y_i$ by $6$;
+let's call them $S'$ and $y_i'$.
+We have to rewrite $\fetches$ and $c$ in terms of these.
+\begin{equation*}
+    \fetches = \left\lceil \frac{6 y_i}{6 S} \right\rceil
+        = \left\lceil \frac{y_i'}{S'} \right\rceil,
+\end{equation*}
+so we may left $\fetches$ untouched.
+For $c$, we will create a $C$ function defined by $C(S) = 6c(S)$.
+We have
+\begin{align*}
+    C(S) = 6c(S) &= 6(aS+b)\sum_{i=1}^n \fetches - 6a \sum_{i=1}^n y_i \\
+        &= (aS'+6b)\sum_{i=1}^n \fetches - a \sum_{i=1}^n y_i',
+\end{align*}
+so we need just to multiply $b$ by~$6$
+in the function that otherwise computes $c$.
+
+\end{document}
